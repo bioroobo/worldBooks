@@ -61,6 +61,11 @@ class Book(models.Model):
         # Возвращает URL-адрес для доступа к определенному экземпляру книги
         return reverse('book-detail', args=[str(self.id)])
 
+    def display_author(self):
+        return ', '.join([author.last_name for author in self.author.all()])
+
+    display_author.short_description = 'Авторы'
+
 
 
 # Relationship:    Many "Book"  - "BookInstance" - Many "Status"
