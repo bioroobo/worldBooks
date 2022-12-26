@@ -15,9 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from catalog.views import *
+from catalog import views
+from django.conf.urls import url  #Django 3.2
+#from django.template.defaulttags import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name='home')
+    path('', views.index, name='index'),
+    url(r'^books/$', views.BookListView.as_view(), name='books'), # http://127.0.0.1:8000/books/
+    url(r'^books/(?P<pk>\d+)$', views.BookDetailView.as_view(), name='book-detail'), # http://127.0.0.1:8000/books/1
+    url(r'^authors/$', views.AuthorListView.as_view(), name='authors'), # http://127.0.0.1:8000/authors/
 ]

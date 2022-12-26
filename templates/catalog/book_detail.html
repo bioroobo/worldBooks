@@ -1,0 +1,51 @@
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Название книги: {{ book.title }}</h1>
+    <p><strong>Жанр:</strong> {{ book.genre }}</p>
+    <p><strong>Аннотация:</strong> {{ book.summary }}</p>
+    <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+    <p><strong>Язык:</strong> {{ book.language }}</p>
+        {% for author in book.author.all %}
+        <p><strong>Автор:</strong>
+            <a href="{{ author.first_name }}">
+                     {{ author.last_name }}
+            </a>
+        </p>
+        {% endfor %}
+
+    <div style="marging-left:20px;margin-top:20px">
+        <h4>Количество экземпляров книг в БД</h4>
+        {% for copy in book.bookinstance_set.all %}
+            <hr><p class="{% if copy.status == 1 %} text-success
+                    {% elif copy.status == 2 %} text-danger
+                    {% else %} text-warning
+                    {% endif %}"> {{ copy.get_status_display }}</p>
+            <p><strong>Издательство:</strong> {{ copy.imprint }}</p>
+            <p class="text-muted"><strong>Инвентарный номер:</strong> {{ copy.id }}</p>
+            <p><strong>Статус экземпляра книги в БД:</strong> {{ copy.status }}</p>
+        {% endfor %}
+   </div>
+{% endblock %}
+<p><strong>Автор:</strong>
+    <a href=""> {{ author.first_name }} {{ athor.last_name }} </a>
+</p>
+
+<!--
+book.bookinstance_set.all() -- Этот метод автоматически сконструирован Django,
+чтобы вернуть множество записей экземпляров книг (BookInstance), связанных
+с конкретной книгой (Bооk)
+А автоматически он создан потому, что в модели данных на стороне «многие» связи
+«один-ко-многим» объявлено поле ForeignKey. Поскольку мы ничего не объявили
+на другой стороне связи («один») этой модели (т.е. модель Bооk «ничего не знает»
+про модель BookInstance), то она не имеет никакой возможности (по умолчанию)
+для получения множества соответствующих записей. Для того чтобы обойти эту
+проблему, Django самостоятельно конструирует соответствующую функцию «обратного
+просмотра» (reverse lookup), которой можно воспользоваться. Имя этой
+функции создается в нижнем регистре и состоит из имени модели, в которой был
+объявлен ForeignKey (в нашем случае это bookinstance), за которым следует выражение
+_set (т. е. функция, созданная для модели Book, будет иметь имя
+book.bookinstance_set). Мы здесь также используем параметр all() для получения
+всех записей из таблицы БД.
+-->
