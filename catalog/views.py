@@ -4,6 +4,7 @@ from . models import Book, Author, BookInstance, Genre
 from django.views import generic
 
 def index(request):
+    my_car = request.session.get('my_car', 'mini')
     # Генерация "количуств" некоторых главных объектов
     num_books = Book.objects.all().count()
     num_instances = BookInstance.objects.all().count()
@@ -12,7 +13,11 @@ def index(request):
     num_instanses_available = BookInstance.objects.filter(status__exact=2).count()
 
     # Авторы книг
-    num_authors = Author.objects.count()
+    num_authors = Author.objects.count() # Метод 'all()' применен по умолчанию.
+
+    # Количество посещений этого view, подсчитанное в переменной session
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1      # Это присваивание распознается как обновление сессии и данные будут сохранены
 
     # Отрисовка HTML-шаблона index.html с данными внутри переменной context
     return render(request, 'index.html',
@@ -21,7 +26,7 @@ def index(request):
                       'num_instances':num_instances,
                       'num_instanses_available':num_instanses_available,
                       'num_authors':num_authors,
-                      #'num_visits':num_visits,
+                      'num_visits':num_visits,
     })
 
 
