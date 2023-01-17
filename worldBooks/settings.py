@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'catalog',
+    'catalog', # Если http://127.0.0.1:8000/accounts/logout/ срабатывает на страницу админа, а не на logged_out.html
+               # то следует 'catalog' прописать перед 'django.contrib.admin'. Такое возникнет, если
+               # оба шаблона расположить по одному и тому же относительному пути,
+               # тогда загрузчик шаблонов Django воспользуется первым найденным
 ]
 
 MIDDLEWARE = [
@@ -128,3 +131,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+LOGIN_REDIRECT_URL = '/'

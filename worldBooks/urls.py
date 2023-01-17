@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from catalog import views
 from django.conf.urls import url  #Django 3.2
 #from django.template.defaulttags import url
@@ -25,4 +25,7 @@ urlpatterns = [
     url(r'^books/$', views.BookListView.as_view(), name='books'), # http://127.0.0.1:8000/books/
     url(r'^books/(?P<pk>\d+)$', views.BookDetailView.as_view(), name='book-detail'), # http://127.0.0.1:8000/books/1
     url(r'^authors/$', views.AuthorListView.as_view(), name='authors'), # http://127.0.0.1:8000/authors/
+
+    # URL-adress for login(sign in) to site system
+    path('accounts/', include('django.contrib.auth.urls')), # http://127.0.0.1:8000/accounts/login/; http://127.0.0.1:8000/accounts/logout/
 ]
