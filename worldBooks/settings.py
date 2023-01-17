@@ -132,4 +132,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/' # # Переадресация на главную страницу сайта после входа в систему
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # see comment in password_reset_complete.html
