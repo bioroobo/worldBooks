@@ -28,4 +28,15 @@ urlpatterns = [
 
     # URL-adress for login(sign in) to site system
     path('accounts/', include('django.contrib.auth.urls')), # http://127.0.0.1:8000/accounts/login/; http://127.0.0.1:8000/accounts/logout/
+    # Это будет включать следующие шаблоны URL:
+    # accounts/login/ [name='login']
+    # accounts/logout/ [name='logout']
+    # accounts/password_change/ [name='password_change']
+    # accounts/password_change/done/ [name='password_change_done']
+    # accounts/password_reset/ [name='password_reset']
+    # accounts/password_reset/done/ [name='password_reset_done']
+    # accounts/reset/<uidb64>/<token>/ [name='password_reset_confirm']
+    # accounts/reset/done/ [name='password_reset_complete']
+
+    url(r'^mybooks/$', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),
 ]
